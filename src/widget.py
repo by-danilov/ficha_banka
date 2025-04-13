@@ -15,3 +15,13 @@ def mask_input_string(data: str) -> str:
         masked_number = get_mask_card_number(number)
 
     return f"{prefix} {masked_number}"
+
+
+def get_date(date_str: str) -> str:
+    """Преобразуем дату в привычный формат"""
+    date_part = date_str.split("T")[0]
+    date_elements = date_part.split("-")
+    year = date_elements[0]
+    month = date_elements[1]
+    day = date_elements[2]
+    return f"{day}.{month}.{year}"
