@@ -1,0 +1,37 @@
+[project]
+name = "ficha-banka"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "ТГ by_danilov"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.2.0"
+black = "^25.1.0"
+isort = "^6.0.1"
+mypy = "^1.15.0"
+
+[tool.black]
+line-length = 88  # Максимальная длина строки
+
+[tool.isort]
+ensure_newline_before_comments = true
+line_length = 88
+
+[tool.mypy]
+show_column_numbers = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"  # Игнорировать ошибки в файлах тестов
+ignore_errors = true
