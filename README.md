@@ -28,9 +28,12 @@ cd your-repo-name
 Импортируй функции:
 
 ```python
-from your_module_name import (
+from processing import (
     filter_by_state,
-    sort_by_date,
+    sort_by_date
+)
+
+from widget import (
     mask_input_string,
     get_date
 )
