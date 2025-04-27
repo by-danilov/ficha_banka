@@ -1,5 +1,6 @@
 import pytest
-from widget import mask_input_string, get_date
+from src.widget import mask_input_string, get_date
+
 
 @pytest.mark.parametrize("input_data,expected", [
     ("Карта 1234567890123456", "Карта 1234 56** **** 3456"),
@@ -8,6 +9,7 @@ from widget import mask_input_string, get_date
 def test_mask_input_string_valid(input_data, expected):
     assert mask_input_string(input_data) == expected
 
+
 @pytest.mark.parametrize("input_data", [
     "НеверныйФормат",
     "Просто текст"
@@ -15,6 +17,7 @@ def test_mask_input_string_valid(input_data, expected):
 def test_mask_input_string_invalid(input_data):
     with pytest.raises(ValueError):
         mask_input_string(input_data)
+
 
 @pytest.mark.parametrize("date_str,expected", [
     ("2025-04-27T15:30:00.000", "27.04.2025"),

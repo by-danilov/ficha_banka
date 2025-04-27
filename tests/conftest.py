@@ -1,13 +1,16 @@
 import pytest
+import sys
+import os
+
 
 @pytest.fixture
 def card_numbers():
-    return [
-        "1234567890123456",  # валидный
-        "123456789012345",   # короткий
-        "12345678901234567", # длинный
-        "abcd567890123456"   # буквы
-    ]
+    return ["1234567890123456",  # валидный
+            "123456789012345",   # короткий
+            "12345678901234567",  # длинный
+            "abcd567890123456"   # буквы
+            ]
+
 
 @pytest.fixture
 def account_numbers():
@@ -16,6 +19,7 @@ def account_numbers():
         "1234",          # короткий
         "abc123"         # буквы
     ]
+
 
 @pytest.fixture
 def transactions():
@@ -26,9 +30,6 @@ def transactions():
         {"state": "EXECUTED", "date": "2025-04-27T14:00:00.000"}
     ]
 
-
-import sys
-import os
 
 def pytest_configure(config):
     rootdir = os.path.dirname(os.path.abspath(__file__))
