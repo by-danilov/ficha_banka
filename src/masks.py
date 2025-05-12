@@ -9,7 +9,7 @@ def get_mask_card_number(card_number: str) -> str:
 
     # Разбивка на блоки по 4 цифры
     masked_number = " ".join(
-        [masked_number[i : i + 4] for i in range(0, len(masked_number), 4)]
+        [masked_number[i: i + 4] for i in range(0, len(masked_number), 4)]
     )
 
     return masked_number
