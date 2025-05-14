@@ -1,5 +1,6 @@
 import functools
 import logging
+import sys
 
 
 def log(filename=None):
@@ -9,19 +10,29 @@ def log(filename=None):
 
     Args:
         filename (str, optional): Имя файла для записи логов.
-                                   Если не указано, логи выводятся в консоль.
-                                   Defaults to None.
+        Если не указано, логи выводятся в консоль.
     """
-    logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                        filename=filename)
+
     logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+
+
+    for handler in list(logger.handlers):
+        logger.removeHandler(handler)
+
+    if filename:
+        file_handler = logging.FileHandler(filename, mode='a', encoding='utf-8')
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+    else:
+        stream_handler = logging.StreamHandler(sys.stdout)
+        stream_handler.setFormatter(formatter)
+        logger.addHandler(stream_handler)
 
     def decorator(func):
-        """Внутренний декоратор."""
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            """Обертка для декорируемой функции."""
             logger.info(f"Начало выполнения функции: {func.__name__}")
             try:
                 result = func(*args, **kwargs)
@@ -33,25 +44,20 @@ def log(filename=None):
             finally:
                 logger.info(f"Завершение выполнения функции: {func.__name__}")
         return wrapper
+
     return decorator
 
-
 if __name__ == '__main__':
-    @log(filename="mylog.txt")
-    def example_function(a, b):
-        """Пример функции для тестирования логирования в файл."""
-        return a / b
+    @log(filename="example.log")
+    def example_function_to_file(a, b):
+        """Пример функции для логирования в файл."""
+        return a + b
 
     @log()
-    def another_function(text):
-        """Пример функции для тестирования логирования в консоль."""
-        print(f"Выполнена функция another_function с текстом: {text}")
+    def example_function_to_console(text):
+        """Пример функции для логирования в консоль."""
+        print(f"Внутри функции: {text}")
         return f"Обработано: {text}"
 
-    try:
-        example_function(10, 2)
-        example_function(5, 0)
-    except ZeroDivisionError:
-        print("Поймана ошибка деления на ноль.")
-
-    another_function("Привет!")
+    example_function_to_file(5, 3)
+    example_function_to_console("Тестовое сообщение")
