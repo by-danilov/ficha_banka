@@ -1,4 +1,5 @@
-from src.masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
+
 
 def mask_input_string(data: str) -> str:
     """Принимает строку с типом и номером, возвращает замаскированную строку."""

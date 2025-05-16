@@ -102,6 +102,12 @@ data = [
     {'id': 2, 'state': 'CANCELED', 'date': '2022-12-01T09:00:00.000000'}
 ]
 ```
+---
+
+## Модуль `generators`
+
+Содержит генераторы для обработки транзакций:
+
 
 ## decorators.py
 
@@ -110,6 +116,27 @@ data = [
 ## test_log.py
 
 Содержит набор тестов, написанных с использованием `pytest`, для проверки функциональности декоратора `log`. Тесты охватывают сценарии успешного выполнения функций и обработки исключений, а также проверяют запись логов как в файл, так и в консоль (с использованием фикстуры `capsys`).
+
+=======
+### filter_by_currency(transactions, currency_code)
+Фильтрует транзакции по валюте.
+
+```python
+usd_tx = filter_by_currency(transactions, "USD")
+print(next(usd_tx))
+```
+### transaction_descriptions(transactions)
+Возвращает описания транзакций.
+```
+desc = transaction_descriptions(transactions)
+print(next(desc))
+```
+### card_number_generator(start, end)
+Генерирует номера карт в формате XXXX XXXX XXXX XXXX.
+```
+for card in card_number_generator(1, 3):
+    print(card)
+```
 
 ---
 

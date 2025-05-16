@@ -1,5 +1,6 @@
 import pytest
-from src.widget import mask_input_string, get_date
+
+from src.widget import get_date, mask_input_string
 
 
 @pytest.mark.parametrize("input_data,expected", [
