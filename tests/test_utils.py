@@ -1,7 +1,7 @@
 import json
 import os
 from unittest.mock import patch
-from src.utils import load_transactions_from_json
+from src.utils.utils import load_transactions_from_json
 import pytest
 
 def test_load_transactions_from_json_valid_file(tmp_path):
