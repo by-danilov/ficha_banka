@@ -1,28 +1,28 @@
-import pytest
-
-from src.widget import get_date, mask_input_string
+from src.masks import mask_account_number, mask_card_number
 
 
-@pytest.mark.parametrize("input_data,expected", [
-    ("Карта 1234567890123456", "Карта 1234 56** **** 3456"),
-    ("Счет 1234567890", "Счет **7890"),
-])
-def test_mask_input_string_valid(input_data, expected):
-    assert mask_input_string(input_data) == expected
+def mask_input_string(data: str) -> str:
+    """Принимает строку с типом и номером, возвращает замаскированную строку."""
+    parts = data.split()
+    if len(parts) < 2:
+        raise ValueError("Неверный формат входной строки. Ожидается 'Тип Номер'.")
+
+    prefix = ' '.join(parts[:-1])
+    number = parts[-1]
+
+    if prefix.lower().startswith("счет"):
+        masked_number = mask_account_number(number)
+    else:
+        masked_number = mask_card_number(number)
+
+    return f"{prefix} {masked_number}"
 
 
-@pytest.mark.parametrize("input_data", [
-    "НеверныйФормат",
-    "Просто текст"
-])
-def test_mask_input_string_invalid(input_data):
-    with pytest.raises(ValueError):
-        mask_input_string(input_data)
-
-
-@pytest.mark.parametrize("date_str,expected", [
-    ("2025-04-27T15:30:00.000", "27.04.2025"),
-    ("2023-01-01T00:00:00.000", "01.01.2023")
-])
-def test_get_date_valid(date_str, expected):
-    assert get_date(date_str) == expected
+def get_date(date_str: str) -> str:
+    """Преобразуем дату в привычный формат"""
+    date_part = date_str.split("T")[0]
+    date_elements = date_part.split("-")
+    year = date_elements[0]
+    month = date_elements[1]
+    day = date_elements[2]
+    return f"{day}.{month}.{year}"

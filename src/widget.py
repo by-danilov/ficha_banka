@@ -1,4 +1,4 @@
-from src.masks import get_mask_account, get_mask_card_number
+from src.masks import mask_account_number, mask_card_number
 
 
 def mask_input_string(data: str) -> str:
@@ -11,9 +11,9 @@ def mask_input_string(data: str) -> str:
     number = parts[-1]
 
     if prefix.lower().startswith("счет"):
-        masked_number = get_mask_account(number)
+        masked_number = mask_account_number(number)
     else:
-        masked_number = get_mask_card_number(number)
+        masked_number = mask_card_number(number)
 
     return f"{prefix} {masked_number}"
 
