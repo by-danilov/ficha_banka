@@ -1,4 +1,4 @@
-id,description,amount,currency,date,status,from,to
+id,description,amount,currency_name,date,state,from,to
 1,Перевод на карту,1500,RUB,08.12.2019,EXECUTED,Счет 4321,Счет **4321
 2,Покупка продуктов в Пятерочке,350,RUB,07.12.2019,EXECUTED,Visa 1234,MasterCard 5678
 3,Оплата интернета,500,RUB,06.12.2019,PENDING,Счет 9876,Счет **0001

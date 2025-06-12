@@ -1,7 +1,7 @@
 # tests/test_analysis.py
 import pytest
 from collections import Counter
-from src.analysis.transaction_analyzer import find_transactions_by_description, count_transactions_by_category
+from src.analysis.additional_analytics import find_transactions_by_description, count_transactions_by_category
 
 # Фикстура с тестовыми данными для транзакций (используем латиницу!)
 @pytest.fixture
