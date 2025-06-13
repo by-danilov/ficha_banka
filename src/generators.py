@@ -1,7 +1,10 @@
 def filter_by_currency(transactions, currency_code):
     """Генератор, фильтрующий транзакции по валюте."""
     for transaction in transactions:
-        if transaction.get("operationAmount", {}).get("currency", {}).get("code") == currency_code:
+        if (
+            transaction.get("operationAmount", {}).get("currency", {}).get("code")
+            == currency_code
+        ):
             yield transaction
 
 

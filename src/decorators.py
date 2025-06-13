@@ -15,14 +15,13 @@ def log(filename=None):
 
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 
     for handler in list(logger.handlers):
         logger.removeHandler(handler)
 
     if filename:
-        file_handler = logging.FileHandler(filename, mode='a', encoding='utf-8')
+        file_handler = logging.FileHandler(filename, mode="a", encoding="utf-8")
         file_handler.setFormatter(formatter)
         logger.addHandler(file_handler)
     else:
@@ -39,15 +38,20 @@ def log(filename=None):
                 logger.info(f"{func.__name__} ok. Результат: {result}")
                 return result
             except Exception as e:
-                logger.error(f"{func.__name__} error: {type(e).__name__}. Inputs: {args}, {kwargs}")
+                logger.error(
+                    f"{func.__name__} error: {type(e).__name__}. Inputs: {args}, {kwargs}"
+                )
                 raise
             finally:
                 logger.info(f"Завершение выполнения функции: {func.__name__}")
+
         return wrapper
 
     return decorator
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
+
     @log(filename="example.log")
     def example_function_to_file(a, b):
         """Пример функции для логирования в файл."""

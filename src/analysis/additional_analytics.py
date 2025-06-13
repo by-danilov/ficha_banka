@@ -8,14 +8,17 @@ from collections import Counter
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-log_dir = 'logs'
+log_dir = "logs"
 os.makedirs(log_dir, exist_ok=True)
-file_handler = logging.FileHandler(os.path.join(log_dir, 'analysis.log'), mode='w')
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler = logging.FileHandler(os.path.join(log_dir, "analysis.log"), mode="w")
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
-def find_transactions_by_description(transactions: list[dict], search_string: str) -> list[dict]:
+
+def find_transactions_by_description(
+    transactions: list[dict], search_string: str
+) -> list[dict]:
     """
     Фильтрует список банковских операций, возвращая те, у которых в описании
     (поле 'description') содержится заданная строка поиска.
@@ -35,7 +38,9 @@ def find_transactions_by_description(transactions: list[dict], search_string: st
         return []
 
     if not search_string:
-        logger.warning("Передана пустая строка поиска для описания. Возвращены все транзакции.")
+        logger.warning(
+            "Передана пустая строка поиска для описания. Возвращены все транзакции."
+        )
         return transactions
 
     filtered_transactions = []
@@ -44,12 +49,16 @@ def find_transactions_by_description(transactions: list[dict], search_string: st
         # re.IGNORECASE для поиска без учета регистра
         pattern = re.compile(search_string, re.IGNORECASE)
         for transaction in transactions:
-            description = transaction.get('description', '')
+            description = transaction.get("description", "")
             if pattern.search(description):
                 filtered_transactions.append(transaction)
-        logger.info(f"Найдено {len(filtered_transactions)} транзакций с описанием, содержащим '{search_string}'.")
+        logger.info(
+            f"Найдено {len(filtered_transactions)} транзакций с описанием, содержащим '{search_string}'."
+        )
     except re.error as e:
-        logger.error(f"Некорректное регулярное выражение '{search_string}': {e}. Возвращен пустой список.")
+        logger.error(
+            f"Некорректное регулярное выражение '{search_string}': {e}. Возвращен пустой список."
+        )
         return []
     except Exception as e:
         logger.error(f"Произошла непредвиденная ошибка при поиске по описанию: {e}")
@@ -57,7 +66,9 @@ def find_transactions_by_description(transactions: list[dict], search_string: st
     return filtered_transactions
 
 
-def count_transactions_by_category(transactions: list[dict], categories: list[str]) -> dict:
+def count_transactions_by_category(
+    transactions: list[dict], categories: list[str]
+) -> dict:
     """
     Подсчитывает количество операций для каждой заданной категории.
 
@@ -86,7 +97,7 @@ def count_transactions_by_category(transactions: list[dict], categories: list[st
     category_counts = Counter()
 
     for transaction in transactions:
-        description = transaction.get('description', '')
+        description = transaction.get("description", "")
         if description:
             # Преобразуем описание к нижнему регистру один раз для сравнения
             lower_description = description.lower()
