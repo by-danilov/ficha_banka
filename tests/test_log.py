@@ -1,17 +1,19 @@
-import pytest
 import os
+
+import pytest
+
 from src.decorators import log
-import logging
 
 
 def get_log_records(filename):
     """Вспомогательная функция для чтения записей из лог-файла."""
-    with open(filename, 'r', encoding='utf-8') as f:
+    with open(filename, "r", encoding="utf-8") as f:
         return f.read()
 
 
 def test_log_to_console_success(capsys):
     """Тест логирования в консоль при успешном выполнении функции."""
+
     @log()
     def success_func():
         return "Успех!"
@@ -26,6 +28,7 @@ def test_log_to_console_success(capsys):
 
 def test_log_to_console_error(capsys):
     """Тест логирования ошибки в консоль."""
+
     @log()
     def error_func():
         raise ValueError("Тестовая ошибка")
@@ -35,7 +38,9 @@ def test_log_to_console_error(capsys):
 
     captured = capsys.readouterr()
     assert "Начало выполнения функции: error_func" in captured.out
-    assert "error_func error: ValueError. Inputs: (), {}" in captured.err or captured.out
+    assert (
+        "error_func error: ValueError. Inputs: (), {}" in captured.err or captured.out
+    )
     assert "Завершение выполнения функции: error_func" in captured.out
 
 

@@ -1,4 +1,5 @@
 import os
+
 import requests
 from dotenv import load_dotenv
 
@@ -6,7 +7,8 @@ load_dotenv()
 EXCHANGE_RATES_API_KEY = os.getenv("EXCHANGE_RATES_API_KEY")
 BASE_URL = "https://api.apilayer.com/exchangerates_data/"
 
-def get_exchange_rate(from_currency, to_currency='RUB'):
+
+def get_exchange_rate(from_currency, to_currency="RUB"):
     """
     Получает текущий обменный курс валюты с помощью Exchange Rates Data API.
 
@@ -28,8 +30,8 @@ def get_exchange_rate(from_currency, to_currency='RUB'):
         response = requests.get(url, headers=headers)
         response.raise_for_status()  # Raise an exception for HTTP errors
         data = response.json()
-        if data and data.get('success'):
-            rates = data.get('rates')
+        if data and data.get("success"):
+            rates = data.get("rates")
             return rates.get(to_currency)
         else:
             print(f"Ошибка API: {data.get('error')}")
@@ -40,6 +42,7 @@ def get_exchange_rate(from_currency, to_currency='RUB'):
     except KeyError:
         print("Ошибка: Неверный формат ответа от API.")
         return None
+
 
 def get_transaction_amount_in_rub(transaction):
     """
@@ -82,19 +85,18 @@ def get_transaction_amount_in_rub(transaction):
         print(f"Некорректное значение суммы: {amount_str}")
         return None
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # Пример использования (требуется наличие EXCHANGE_RATES_API_KEY в .env)
     test_transaction_rub = {
-        "operationAmount": {
-            "amount": "100.00",
-            "currency": {"code": "RUB"}
-        }
+        "operationAmount": {"amount": "100.00", "currency": {"code": "RUB"}}
     }
     test_transaction_usd = {
-        "operationAmount": {
-            "amount": "10.00",
-            "currency": {"code": "USD"}
-        }
+        "operationAmount": {"amount": "10.00", "currency": {"code": "USD"}}
     }
-    print(f"Сумма в рублях (RUB): {get_transaction_amount_in_rub(test_transaction_rub)}")
-    print(f"Сумма в рублях (USD): {get_transaction_amount_in_rub(test_transaction_usd)}")
+    print(
+        f"Сумма в рублях (RUB): {get_transaction_amount_in_rub(test_transaction_rub)}"
+    )
+    print(
+        f"Сумма в рублях (USD): {get_transaction_amount_in_rub(test_transaction_usd)}"
+    )

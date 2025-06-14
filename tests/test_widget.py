@@ -7,7 +7,7 @@ def mask_input_string(data: str) -> str:
     if len(parts) < 2:
         raise ValueError("Неверный формат входной строки. Ожидается 'Тип Номер'.")
 
-    prefix = ' '.join(parts[:-1])
+    prefix = " ".join(parts[:-1])
     number = parts[-1]
 
     if prefix.lower().startswith("счет"):
